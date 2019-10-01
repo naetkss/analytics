@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  analytics-rabbitmq:
+    image: itzg/rabbitmq-stomp
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "61613:61613"
+
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - logvolume01:/var/log
+    links:
+      - analytics-rabbitmq
